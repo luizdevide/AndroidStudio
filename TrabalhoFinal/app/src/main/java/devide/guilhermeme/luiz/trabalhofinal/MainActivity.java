@@ -1,10 +1,10 @@
 package devide.guilhermeme.luiz.trabalhofinal;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,15 +17,13 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     EditText editTime, editJogador, editNumeroJogador, editTamanho, editAno;
-    Button buttonCadastrar, buttonExcluir, buttonLimpar, buttonAlterar;
+    Button buttonCadastrar, buttonLimpar, buttonEditar;
     ListView listViewCamisas;
 
     BancoDados db = new BancoDados(this);
 
     ArrayAdapter<String> adapter;
     ArrayList<String> arrayList;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +37,8 @@ public class MainActivity extends AppCompatActivity {
         editAno = (EditText)findViewById(R.id.editAno);
 
         buttonCadastrar = (Button)findViewById(R.id.buttonCadastrar);
-        buttonExcluir = (Button)findViewById(R.id.buttonExcluir);
         buttonLimpar = (Button)findViewById(R.id.buttonLimpar);
-        buttonAlterar = (Button)findViewById(R.id.buttonAlterar);
+        buttonEditar = (Button)findViewById(R.id.buttonEditar);
 
         listViewCamisas = (ListView) findViewById(R.id.listViewCamisas);
 
@@ -64,51 +61,15 @@ public class MainActivity extends AppCompatActivity {
                 listarCamisas();
             }
         });
-/*
-        buttonExcluir.setOnClickListener(new View.OnClickListener() {
+
+        buttonEditar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //String codigo = editCodigo.getText().toString();
-                /*
-                if(codigo.isEmpty){
-                    Toast.makeText(MainActivity.this, "Codigo nao encontrado", Toast.LENGTH_SHORT).show();
-                } else {
-                    Camisas camisas = new Camisas();
-                    camisas.setCodigo(Integer.parseInt(codigo));
-                    db.apagarCamisas(camisas);
-
-                    limpaCampos();
-                    listarCamisas();
-                    Toast.makeText(MainActivity.this, "Campo excluido com sucesso", Toast.LENGTH_SHORT).show();
-                }
-
+                Intent it = new Intent(MainActivity.this, ActivityEdit.class);
+                startActivity(it);
             }
         });
-*/
-        /* Teste do CRUD */
-
-        /*Teste Selecionaor Camisas*/
-        /*Camisas camisas = db.selecionarCamisas(1);
-
-        Log.d("Camisas Selecionada", "Codigo: " + camisas.getCodigo() + "Time: " + camisas.getTime() + "Nome: " + camisas.getJogador() + "Numero : " + camisas.getNumeroJogador()
-                + "Tamanho: " +camisas.getTamanho() + "Ano: " + camisas.getAno());*/
-
-        /*Teste Atualizar Camisas*/
-        /*Camisas camisas = new Camisas();
-        camisas.setCodigo(1);
-        camisas.setTime("SAO PAULO CARAJO");
-        camisas.setJogador("Rogerio Ceni");
-        camisas.setNumeroJogador(1);
-        camisas.setTamanho("G");
-        camisas.setAno(2008);
-
-        db.atualizaCamisas(camisas);
-
-        Toast.makeText(MainActivity.this, "Atualizado com sucesso", Toast.LENGTH_LONG).show();*/
-
     }
-
 
     public void limpaCampos(){
         editTime.setText(null);
@@ -134,10 +95,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Cadastro Realizado Com Sucesso!", Toast.LENGTH_SHORT).show();
     }
 
-    public void excluiCampos(){
-
-    }
-
     public void listarCamisas(){
 
         List<Camisas> camisas = db.listaTodasCamisas();
@@ -149,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         listViewCamisas.setAdapter(adapter);
 
         for(Camisas c : camisas){
-            arrayList.add(c.getCodigo() + "-" + c.getJogador());
+            arrayList.add(c.getCodigo() + " - " + c.getJogador() + " - " + c.getTime() + " - " + c.getNumeroJogador() + " - " + c.getTamanho() + " - " + c.getAno());
             adapter.notifyDataSetChanged();
         }
     }

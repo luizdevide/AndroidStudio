@@ -21,6 +21,15 @@ public class Camisas {
         this.ano = _ano;
     }
 
+    public Camisas(String _time, String _jogador, int _numeroJogador, String _tamanho, int _ano) {
+
+        this.time = _time;
+        this.jogador = _jogador;
+        this.numeroJogador = _numeroJogador;
+        this.tamanho = _tamanho;
+        this.ano = _ano;
+    }
+
 
     public String getJogador() {
         return jogador;

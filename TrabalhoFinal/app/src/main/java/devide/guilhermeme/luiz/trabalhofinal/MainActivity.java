@@ -47,22 +47,46 @@ public class MainActivity extends AppCompatActivity {
 
         listarCamisas();
 
-        listViewCamisas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        buttonLimpar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View v) {
 
-                String conteudo = (String) listViewCamisas.getItemAtPosition(position);
-
-                Toast.makeText(MainActivity.this, "Select: " + conteudo, Toast.LENGTH_LONG).show();
+                limpaCampos();
             }
         });
 
-        /* Teste do CRUD */
+        buttonCadastrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        /*Teste Adicionando Camisas*/
-        db.addCamisas(new Camisas(1,"Sao Paulo","Rogerio Ceni",1,"Grande",2008));
-        db.addCamisas(new Camisas(2,"Arsenal","Ozil",11,"Medio",2016));
-        db.addCamisas(new Camisas(3,"Cavs","Lebron James",23,"Extra Grande",2015));
+                cadastraCampos();
+                limpaCampos();
+                listarCamisas();
+            }
+        });
+/*
+        buttonExcluir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //String codigo = editCodigo.getText().toString();
+                /*
+                if(codigo.isEmpty){
+                    Toast.makeText(MainActivity.this, "Codigo nao encontrado", Toast.LENGTH_SHORT).show();
+                } else {
+                    Camisas camisas = new Camisas();
+                    camisas.setCodigo(Integer.parseInt(codigo));
+                    db.apagarCamisas(camisas);
+
+                    limpaCampos();
+                    listarCamisas();
+                    Toast.makeText(MainActivity.this, "Campo excluido com sucesso", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+*/
+        /* Teste do CRUD */
 
         /*Teste Selecionaor Camisas*/
         /*Camisas camisas = db.selecionarCamisas(1);
@@ -82,6 +106,35 @@ public class MainActivity extends AppCompatActivity {
         db.atualizaCamisas(camisas);
 
         Toast.makeText(MainActivity.this, "Atualizado com sucesso", Toast.LENGTH_LONG).show();*/
+
+    }
+
+
+    public void limpaCampos(){
+        editTime.setText(null);
+        editAno.setText(null);
+        editJogador.setText(null);
+        editNumeroJogador.setText(null);
+        editTamanho.setText(null);
+
+        editTime.requestFocus();
+        Toast.makeText(this, "Campos Limpos!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void cadastraCampos(){
+        String time = editTime.getText().toString();
+        String jogador = editJogador.getText().toString();
+        String numero = editNumeroJogador.getText().toString();
+        int numero1 = Integer.parseInt(numero);
+        String tamanho = editTamanho.getText().toString();
+        String ano = editAno.getText().toString();
+        int ano1 = Integer.parseInt(ano);
+
+        db.addCamisas(new Camisas(time,jogador, numero1, tamanho, ano1));
+        Toast.makeText(this, "Cadastro Realizado Com Sucesso!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void excluiCampos(){
 
     }
 

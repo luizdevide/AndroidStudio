@@ -1,7 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Jerseys Fans</string>
     <string name="cinza">Cinza</string>
-    <string name="laranja">Laranja</string>
+    <string name="vermelho">Vermelho</string>
+    <string name="branco">Branco</string>
     <string name="preferencias_cores">devide.guilhermeme.luiz.trabalhofinal.PREFERENCIAS_CORES</string>
     <string name="cor_fundo">COR_FUNDO</string>
+    <string name="tittle">Trabalho Final</string>
+    <string name="jogador">Jogador</string>
+    <string name="time">Time</string>
+    <string name="tamanho">Tamanho</string>
+    <string name="ano">Ano</string>
+    <string name="numero">Numero</string>
 </resources>

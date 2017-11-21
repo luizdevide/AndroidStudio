@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">Jerseys Fans</string>
+    <string name="cinza">Grey</string>
+    <string name="vermelho">Red</string>
+    <string name="branco">White</string>
+    <string name="preferencias_cores">devide.guilhermeme.luiz.trabalhofinal.PREFERENCIAS_CORES</string>
+    <string name="cor_fundo">COR_FUNDO</string>
+    <string name="tittle">Final Work</string>
+    <string name="jogador">Player</string>
+    <string name="time">Team</string>
+    <string name="tamanho">Size</string>
+    <string name="ano">Year</string>
+    <string name="numero">Number</string>
+</resources>

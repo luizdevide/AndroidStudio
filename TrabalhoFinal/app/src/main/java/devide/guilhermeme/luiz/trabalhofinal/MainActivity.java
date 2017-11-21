@@ -1,12 +1,12 @@
 package devide.guilhermeme.luiz.trabalhofinal;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.View;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,7 +17,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     EditText editTime, editJogador, editNumeroJogador, editTamanho, editAno;
-    Button buttonCadastrar, buttonLimpar, buttonEditar;
     ListView listViewCamisas;
 
     BancoDados db = new BancoDados(this);
@@ -36,39 +35,9 @@ public class MainActivity extends AppCompatActivity {
         editTamanho = (EditText)findViewById(R.id.editTamanho);
         editAno = (EditText)findViewById(R.id.editAno);
 
-        buttonCadastrar = (Button)findViewById(R.id.buttonCadastrar);
-        buttonLimpar = (Button)findViewById(R.id.buttonLimpar);
-        buttonEditar = (Button)findViewById(R.id.buttonEditar);
-
         listViewCamisas = (ListView) findViewById(R.id.listViewCamisas);
 
         listarCamisas();
-
-        buttonLimpar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                limpaCampos();
-            }
-        });
-
-        buttonCadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                cadastraCampos();
-                limpaCampos();
-                listarCamisas();
-            }
-        });
-
-        buttonEditar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(MainActivity.this, ActivityEdit.class);
-                startActivity(it);
-            }
-        });
     }
 
     public void limpaCampos(){
@@ -91,8 +60,14 @@ public class MainActivity extends AppCompatActivity {
         String ano = editAno.getText().toString();
         int ano1 = Integer.parseInt(ano);
 
-        db.addCamisas(new Camisas(time,jogador, numero1, tamanho, ano1));
-        Toast.makeText(this, "Cadastro Realizado Com Sucesso!", Toast.LENGTH_SHORT).show();
+        if( time == "" || jogador == ""  || tamanho == ""){
+            Toast.makeText(this, "Preencha os campos corretamente", Toast.LENGTH_LONG).show();
+            return;
+        }
+        else {
+            db.addCamisas(new Camisas(time, jogador, numero1, tamanho, ano1));
+            Toast.makeText(this, "Cadastro Realizado Com Sucesso!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void listarCamisas(){
@@ -106,8 +81,39 @@ public class MainActivity extends AppCompatActivity {
         listViewCamisas.setAdapter(adapter);
 
         for(Camisas c : camisas){
-            arrayList.add(c.getCodigo() + " - " + c.getJogador() + " - " + c.getTime() + " - " + c.getNumeroJogador() + " - " + c.getTamanho() + " - " + c.getAno());
+            arrayList.add(c.getCodigo() + " - " + c.getJogador() + " - " + c.getTime() + " \n Numero: " + c.getNumeroJogador() + " - Tamanho: " + c.getTamanho() + " - Ano: " + c.getAno());
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.salvar:
+                cadastraCampos();
+                limpaCampos();
+                listarCamisas();
+                break;
+
+            case R.id.editar:
+                Intent it = new Intent(MainActivity.this, ActivityEdit.class);
+                startActivity(it);
+                break;
+
+            case R.id.Sobre:
+                Intent aAbout = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(aAbout);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

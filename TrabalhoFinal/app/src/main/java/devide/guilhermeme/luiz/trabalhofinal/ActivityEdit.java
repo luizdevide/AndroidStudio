@@ -1,17 +1,23 @@
 package devide.guilhermeme.luiz.trabalhofinal;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ActivityEdit extends AppCompatActivity {
 
     EditText editTime, editJogador, editNumero, editTamanho, editAno, editCodigo;
-    Button buttonAtualizar, buttonExcluir, buttonVoltar;
 
     BancoDados db = new BancoDados(this);
 
@@ -27,45 +33,7 @@ public class ActivityEdit extends AppCompatActivity {
         editTamanho = (EditText)findViewById(R.id.editTamanho);
         editAno = (EditText)findViewById(R.id.editAno);
 
-        buttonAtualizar = (Button)findViewById(R.id.buttonAtualizar);
-        buttonExcluir = (Button)findViewById(R.id.buttonExcluir);
-        buttonVoltar= (Button)findViewById(R.id.buttonVoltar);
 
-        buttonExcluir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String codigo = editCodigo.getText().toString();
-                
-                if(codigo.isEmpty()){
-                    Toast.makeText(ActivityEdit.this, "Codigo nao encontrado", Toast.LENGTH_SHORT).show();
-                } else {
-                    Camisas camisas = new Camisas();
-                    camisas.setCodigo(Integer.parseInt(codigo));
-                    db.apagarCamisas(camisas);
-
-                    limpaCampos();
-                    Toast.makeText(ActivityEdit.this, "Campo excluido com sucesso", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-        buttonVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(ActivityEdit.this, MainActivity.class);
-                startActivity(it);
-            }
-        });
-
-        buttonAtualizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                atualizaCampos();
-            }
-        });
     }
 
     public void limpaCampos(){
@@ -92,5 +60,40 @@ public class ActivityEdit extends AppCompatActivity {
 
         db.atualizaCamisas(new Camisas(codigo1,time,jogador, numero1, tamanho, ano1));
         Toast.makeText(this, "Alteracao Realizada Com Sucesso!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu2, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.excluir:
+
+                String codigo = editCodigo.getText().toString();
+
+                if (codigo.isEmpty()) {
+                    Toast.makeText(ActivityEdit.this, "Codigo nao encontrado", Toast.LENGTH_SHORT).show();
+                } else {
+                    Camisas camisas = new Camisas();
+                    camisas.setCodigo(Integer.parseInt(codigo));
+                    db.apagarCamisas(camisas);
+
+                    limpaCampos();
+                    Toast.makeText(ActivityEdit.this, "Campo excluido com sucesso", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+
+            case R.id.alterar:
+                atualizaCampos();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

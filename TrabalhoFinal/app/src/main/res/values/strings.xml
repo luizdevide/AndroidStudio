@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Trabalho Final</string>
+    <string name="app_name">Jerseys Fans</string>
+    <string name="cinza">Cinza</string>
+    <string name="laranja">Laranja</string>
+    <string name="preferencias_cores">devide.guilhermeme.luiz.trabalhofinal.PREFERENCIAS_CORES</string>
+    <string name="cor_fundo">COR_FUNDO</string>
 </resources>

@@ -2,15 +2,6 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group />
-    <item
-        android:id="@+id/editar"
-        android:checkable="false"
-        android:enabled="true"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:title="Editar"
-        android:visible="true"
-        app:showAsAction="always"/>
     <item
         android:id="@+id/salvar"
         android:enabled="true"
@@ -19,11 +10,33 @@
         android:visible="true"
         app:showAsAction="always"/>
     <item
+        android:id="@+id/editar"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Editar"
+        android:visible="true"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/Sobre"
         android:enabled="true"
         android:icon="@android:drawable/ic_menu_help"
         android:title="Sobre"
         android:visible="true"
         app:showAsAction="always" />
+
+    <group
+        android:id="@+id/groupCores"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/menuItemCinza"
+            android:title="Cinza"/>
+        <item
+            android:id="@+id/menuItemVermelho"
+            android:title="Vermelho" />
+        <item
+            android:id="@+id/menuItemBranco"
+            android:title="Branco" />
+    </group>
 
 </menu>

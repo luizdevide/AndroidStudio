@@ -1,7 +1,11 @@
 package devide.guilhermeme.luiz.trabalhofinal;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,10 +28,16 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     ArrayList<String> arrayList;
 
+    private ConstraintLayout constraintLayout;
+    private int opcao = Color.WHITE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        constraintLayout = (ConstraintLayout) findViewById(R.id.layoutPrincipal);
+        lerPreferenciaCor();
 
         editTime = (EditText)findViewById(R.id.editTime);
         editJogador = (EditText)findViewById(R.id.editJogador);
@@ -48,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
         editTamanho.setText(null);
 
         editTime.requestFocus();
-        Toast.makeText(this, "Campos Limpos!", Toast.LENGTH_SHORT).show();
     }
 
     public void cadastraCampos(){
@@ -60,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         String ano = editAno.getText().toString();
         int ano1 = Integer.parseInt(ano);
 
-        if( time == "" || jogador == ""  || tamanho == ""){
+        if( time.isEmpty() || jogador.isEmpty() || numero.isEmpty() || tamanho.isEmpty() || ano.isEmpty()){
             Toast.makeText(this, "Preencha os campos corretamente", Toast.LENGTH_LONG).show();
             return;
         }
@@ -86,12 +95,60 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void mudarCorFundo(){
+        constraintLayout.setBackgroundColor(opcao);
+    }
+
+    private void lerPreferenciaCor(){
+        SharedPreferences sharedPref =
+                getSharedPreferences(getString(R.string.preferencias_cores),
+                        Context.MODE_PRIVATE);
+
+        opcao = sharedPref.getInt(getString(R.string.cor_fundo), opcao);
+
+        mudarCorFundo();
+    }
+
+    private void salvarPreferenciaCor(int novoValor){
+        SharedPreferences sharedPref =
+                getSharedPreferences(getString(R.string.preferencias_cores),
+                        Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putInt(getString(R.string.cor_fundo), novoValor);
+
+        editor.commit();
+
+        opcao = novoValor;
+
+        mudarCorFundo();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        switch(opcao){
+            case Color.GRAY:
+                menu.getItem(0).setChecked(true);
+                return true;
+            case Color.RED:
+                menu.getItem(1).setChecked(true);
+                return true;
+            case Color.WHITE:
+                menu.getItem(2).setChecked(true);
+                return true;
+            default:
+                return false;
+        }
     }
 
     @Override
@@ -112,6 +169,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent aAbout = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(aAbout);
                 break;
+        }
+
+        item.setChecked(true);
+
+        switch(item.getItemId()){
+            case R.id.menuItemCinza:
+                salvarPreferenciaCor(Color.GRAY);
+                return true;
+            case R.id.menuItemVermelho:
+                salvarPreferenciaCor(Color.RED);
+                return true;
+            case R.id.menuItemBranco:
+                salvarPreferenciaCor(Color.WHITE);
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -58,8 +58,14 @@ public class ActivityEdit extends AppCompatActivity {
         String ano = editAno.getText().toString();
         int ano1 = Integer.parseInt(ano);
 
-        db.atualizaCamisas(new Camisas(codigo1,time,jogador, numero1, tamanho, ano1));
-        Toast.makeText(this, "Alteracao Realizada Com Sucesso!", Toast.LENGTH_SHORT).show();
+        if( time.isEmpty() || jogador.isEmpty() || numero.isEmpty() || tamanho.isEmpty() || ano.isEmpty()){
+            Toast.makeText(this, "Preencha os campos corretamente", Toast.LENGTH_LONG).show();
+            return;
+        }
+        else{
+            db.atualizaCamisas(new Camisas(codigo1,time,jogador, numero1, tamanho, ano1));
+            Toast.makeText(this, "Alteracao Realizada Com Sucesso!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

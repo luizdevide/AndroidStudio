@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tittle">Final Work</string>
+    <string name="jogador">Player</string>
+    <string name="time">Team</string>
+    <string name="tamanho">Size</string>
+    <string name="ano">Year</string>
+    <string name="numero">Number</string>
+</resources>
